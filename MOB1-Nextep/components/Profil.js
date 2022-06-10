@@ -1,26 +1,37 @@
 import React, { Component } from "react";
 import {
-  ImageBackground,
-  Image,
   StyleSheet,
   Text,
-  TextInput,
   View,
-  Button,
   SafeAreaView,
 } from "react-native";
+import * as SecureStore from 'expo-secure-store';
+import axios from "axios";
+import { config } from '../config';
 
 class Profil extends Component {
     constructor(props) {
         super(props),
-        (this.state = { username: "", password: ""});
+        this.state = {data: []};
+        SecureStore.getItemAsync("userToken").then(
+          (token) => {
+            const axiosConfig = {headers: { Authorization: "Bearer " + token}};
+            axios.get(config.apiurl + "profile",axiosConfig)
+            .then(response => {
+              this.setState({data: response.data});
+            })
+          .catch(error => {
+            console.log(error);
+          }); });
     }
 
     render() {
         return (
             <View style={styles.container}>
               <SafeAreaView>
-                  <Text>Profil</Text>
+                <Text>{this.state.data.username}</Text>
+                <Text>{this.state.data.firstname} {this.state.data.lastname}</Text>
+                <Text>{this.state.data.email}</Text>
               </SafeAreaView>
             </View>
         );
