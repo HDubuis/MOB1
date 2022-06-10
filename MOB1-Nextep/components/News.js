@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import {
-  ImageBackground,
-  Image,
   StyleSheet,
   Text,
-  TextInput,
   View,
-  Button,
   SafeAreaView,
 } from "react-native";
 
@@ -19,10 +15,8 @@ class News extends Component {
     render() {
         return (
             <View style={styles.container}>
-
               <SafeAreaView>
-                  <Text>Actualité</Text>
-                  
+                  <Text>Actualité</Text> 
               </SafeAreaView>
             </View>
         );

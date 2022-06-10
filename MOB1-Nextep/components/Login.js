@@ -24,7 +24,7 @@ class Login extends Component {
         const payload = { username, password };
         const onSuccess = ({ data }) => {
             this.setState({ userToken: data });
-            SecureStore.setItemAsync("user_token", this.state.userToken);
+            SecureStore.setItemAsync("userToken", this.state.userToken);
             this.props.auth(data);
         };
         const onError = (error) => {
