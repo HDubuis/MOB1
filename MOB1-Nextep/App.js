@@ -1,25 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { MyDrawer } from './components/MyDrawer';
+import React, { Component } from 'react';
+import 'react-native-gesture-handler';
+import * as SecureStore from 'expo-secure-store';
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <MyDrawer />
-      <SafeAreaView>
-        <Text style={styles.container}>Test</Text>
-        <StatusBar style="auto" />
-      </SafeAreaView>
-    </NavigationContainer>
-  );
+import Drawer from './components/Drawer';
+
+export default class App extends Component { 
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return (
+      <Drawer />
+    )
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 2,
-    backgroundColor: 'skyblue',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
