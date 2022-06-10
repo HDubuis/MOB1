@@ -15,14 +15,12 @@ class Profil extends Component {
         super(props),
         (this.state = { username: "", password: ""});
     }
- 
+
     render() {
         return (
             <View style={styles.container}>
-
               <SafeAreaView>
                   <Text>Profil</Text>
-                  
               </SafeAreaView>
             </View>
         );
