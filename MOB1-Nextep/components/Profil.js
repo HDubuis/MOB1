@@ -1,26 +1,62 @@
 import React, { Component } from "react";
 import {
-  ImageBackground,
-  Image,
   StyleSheet,
   Text,
-  TextInput,
   View,
-  Button,
   SafeAreaView,
+  Button,
 } from "react-native";
+import * as SecureStore from 'expo-secure-store';
+import axios from "axios";
+import { config } from '../config';
+import { TextInput } from "react-native-gesture-handler";
 
 class Profil extends Component {
     constructor(props) {
-        super(props),
-        (this.state = { username: "", password: ""});
+        super(props);
+        this.state = {data: [], userToken: ""};
+        SecureStore.getItemAsync("userToken").then(
+          (token) => {
+            this.setState({ userToken: token });
+            const axiosConfig = {headers: { Authorization: "Bearer " + token}};
+            axios.get(config.apiurl + "profile",axiosConfig)
+            .then(response => {
+              this.setState({data: response.data});
+            })
+          .catch(error => {
+            console.log(error);
+          }); });
+    }
+
+    onEmailChange = (newEmail) => {
+      this.setState({data: {...this.state.data, email: newEmail}});
+    };
+    
+    onDescriptionChange = (newDescription) => {
+      this.setState({data: {...this.state.data, description: newDescription}});
+    }
+
+    updatePressed() {
+        const {email, description } = this.state.data;
+        const _method = "PATCH";
+        const payload = { email, description, _method };
+        const axiosConfig = {headers: { Authorization: "Bearer " + this.state.userToken}};
+
+        axios.post(config.apiurl + "profile", payload, axiosConfig)
+          .catch(error => {
+            console.log(error);
+          });
     }
 
     render() {
         return (
             <View style={styles.container}>
               <SafeAreaView>
-                  <Text>Profil</Text>
+                <Text style={styles.title}>{this.state.data.username}</Text>
+                <Text style={styles.text}>{this.state.data.firstname} {this.state.data.lastname}</Text>
+                <TextInput placeholder="email" style={styles.input} onChangeText={this.onEmailChange}>{this.state.data.email}</TextInput>
+                <TextInput placeholder="Description" style={styles.input} onChangeText={this.onDescriptionChange}>{this.state.data.description}</TextInput>
+                <Button title="Modifier" onPress={this.updatePressed.bind(this)}/>
               </SafeAreaView>
             </View>
         );
@@ -35,38 +71,27 @@ const styles = StyleSheet.create({
         height: 45,
     },
   container: {
-    flex: 1,
-    flexDirection: "column",
-    alignSelf: "stretch",
     textAlign: "center",
+    margin: 20,
   },
   image: {
     width: 50,
     height: 200,
   },
-  backgroud: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-  },
-  text: {
+  title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white"
+  },
+  text: {
+    fontSize: 12,
+    marginLeft: 10,
+    marginBottom: 10,
   },
   input: {
     backgroundColor: "#FFFFFF",
-
-    marginLeft: 50,
-    marginRight: 50,
-    marginBottom: 20,
-    height: 50,
-  },
-  picker: {
-    marginLeft: 50,
-    marginRight: 50,
-    marginBottom: 20,
-    height: 50,
+    fontSize: 12,
+    marginLeft: 10,
+    marginBottom: 10,
   },
 });
 

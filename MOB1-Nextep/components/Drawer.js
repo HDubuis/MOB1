@@ -21,7 +21,8 @@ class Drawer extends Component{
 
   constructor(props) {
     super(props);
-    this.state = { userToken: SecureStore.getItemAsync("userToken") };
+    const userToken = SecureStore.getItemAsync("userToken").then(
+      (token) => { this.handleTokenUpdate(token) });
     this.handleTokenUpdate = this.handleTokenUpdate.bind(this);
   }
 

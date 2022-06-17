@@ -7,7 +7,7 @@ import { config } from '../config';
 class Login extends Component {
     constructor(props) {
         super(props),
-        this.state = { username: "", password: "", log: ""};
+        this.state = { username: "", password: ""};
     }
 
     onUsernameChange = (newUsername) => {
@@ -24,9 +24,8 @@ class Login extends Component {
         const payload = { username, password };
         const onSuccess = ({ data }) => {
             this.setState({ userToken: data });
-            SecureStore.setItemAsync("user_token", this.state.userToken);
+            SecureStore.setItemAsync("userToken", this.state.userToken);
             this.props.auth(data);
-            this.setState({ log: "Connexion réussie" });
         };
         const onError = (error) => {
             console.log(error);
@@ -42,7 +41,6 @@ class Login extends Component {
             <TextInput style={styles.input} placeholder="Utilisateur" onChangeText={ this.onUsernameChange}/>
             <TextInput secureTextEntry={true} style={styles.input} placeholder="Mot de passe" onChangeText={ this.onPasswordChange} />
             <Button title="Connexion" onPress={ this.okPressed.bind(this)}/>
-            <Text>{this.state.log}</Text>
         </View>
         )
     }
