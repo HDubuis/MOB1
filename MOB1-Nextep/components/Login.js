@@ -30,7 +30,7 @@ class Login extends Component {
         const onError = (error) => {
             console.log(error);
         };
-        axios.post(config.apiurl +'mytoken?', payload)
+        axios.post(config.apiurl +'mytoken', payload)
             .then(onSuccess)
             .catch(onError);
     };

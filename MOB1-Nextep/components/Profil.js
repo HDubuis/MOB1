@@ -5,6 +5,8 @@ import {
   View,
   SafeAreaView,
   Button,
+  Image,
+  TouchableOpacity,
 } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import axios from "axios";
@@ -54,6 +56,9 @@ class Profil extends Component {
               <SafeAreaView>
                 <Text style={styles.title}>{this.state.data.username}</Text>
                 <Text style={styles.text}>{this.state.data.firstname} {this.state.data.lastname}</Text>
+                <TouchableOpacity style={styles.picture} onPress={() => this.props.navigation.navigate('Camera')}>
+                  <Image style={styles.picture} source={{uri: config.imageUrl+this.state.data.picture}} />
+                </TouchableOpacity>
                 <TextInput placeholder="email" style={styles.input} onChangeText={this.onEmailChange}>{this.state.data.email}</TextInput>
                 <TextInput placeholder="Description" style={styles.input} onChangeText={this.onDescriptionChange}>{this.state.data.description}</TextInput>
                 <Button title="Modifier" onPress={this.updatePressed.bind(this)}/>
@@ -64,12 +69,12 @@ class Profil extends Component {
 }
 
 const styles = StyleSheet.create({
-    tinyLogo: {
-        alignSelf: "center",
-        resizeMode: 'stretch',
-        width: 240,
-        height: 45,
-    },
+  picture: {
+    height: 200,
+    width: 200,
+    marginLeft: 5,
+    marginBottom: 10,
+  },
   container: {
     textAlign: "center",
     margin: 20,
@@ -85,7 +90,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     marginLeft: 10,
-    marginBottom: 10,
   },
   input: {
     backgroundColor: "#FFFFFF",
