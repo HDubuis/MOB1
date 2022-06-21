@@ -24,6 +24,7 @@ class Profil extends Component {
             axios.get(config.apiurl + "profile",axiosConfig)
             .then(response => {
               this.setState({data: response.data});
+              console.log(response.data);
             })
           .catch(error => {
             console.log(error);
@@ -56,7 +57,7 @@ class Profil extends Component {
               <SafeAreaView>
                 <Text style={styles.title}>{this.state.data.username}</Text>
                 <Text style={styles.text}>{this.state.data.firstname} {this.state.data.lastname}</Text>
-                <TouchableOpacity style={styles.picture} onPress={() => this.props.navigation.navigate('Camera')}>
+                <TouchableOpacity style={styles.picture} onPress={() => this.props.navigation.navigate('Photo')}>
                   <Image style={styles.picture} source={{uri: config.imageUrl+this.state.data.picture}} />
                 </TouchableOpacity>
                 <TextInput placeholder="email" style={styles.input} onChangeText={this.onEmailChange}>{this.state.data.email}</TextInput>

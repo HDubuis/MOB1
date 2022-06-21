@@ -64,7 +64,7 @@ class Drawer extends Component{
             <MyDrawer.Screen name="Partenaire" component={Partner} />
             <MyDrawer.Screen name="Paramètre" component={Settings} />
             <MyDrawer.Screen name="Vote" component={Vote} />
-            <MyDrawer.Screen name="Photo" component={(props) => <Camera {...props}/>}  options={{
+            <MyDrawer.Screen name="Photo" component={(props) => <Photo {...props}/>}  options={{
                   drawerItemStyle: { display: 'none' },
                   headerShown: false
             }}/>
