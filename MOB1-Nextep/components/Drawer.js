@@ -11,7 +11,8 @@ import Partner from './Partner';
 import Settings from './Settings';
 import Vote from './Vote';
 import Login from "./Login";
-export { Profil, Chat, News, Kitty, Partner, Settings, Vote, Login };
+import Photo from "./Photo";
+export { Profil, Chat, News, Kitty, Partner, Settings, Vote, Login ,Photo};
 
 
 const MyDrawer = createDrawerNavigator();
@@ -63,6 +64,10 @@ class Drawer extends Component{
             <MyDrawer.Screen name="Partenaire" component={Partner} />
             <MyDrawer.Screen name="Paramètre" component={Settings} />
             <MyDrawer.Screen name="Vote" component={Vote} />
+            <MyDrawer.Screen name="Photo" component={(props) => <Photo {...props}/>}  options={{
+                  drawerItemStyle: { display: 'none' },
+                  headerShown: false
+            }}/>
         </MyDrawer.Navigator>
       </NavigationContainer>
     ):
