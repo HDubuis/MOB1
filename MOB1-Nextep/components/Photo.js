@@ -62,10 +62,10 @@ class Photo extends Component {
       axios.post(config.apiurl + "profile/photo", data, header)
       .then(() => {
         console.log("Photo saved");
-        props.navigation.reset({
-          index: 0,
-          routes: [{ name: 'Profil' }], 
-      })})
+        this.props.navigation.reset({index:0 , routes: [{name: "Mon profil"}]});
+        })
+
+      
     }
 
     takePicture = async () => {
@@ -83,6 +83,7 @@ class Photo extends Component {
         return <Text>No access to camera</Text>;
       } else {
         return (
+          this.state.capturedPicture != null ?(
           <SafeAreaView style={styles.container}>
             <Camera type={this.state.cameraType} style={styles.camera}   ref={(r) => {
             camera = r}}>
@@ -96,7 +97,18 @@ class Photo extends Component {
               </View>
             </Camera>
           </SafeAreaView>
-      );
+          ) : (
+            <SafeAreaView style={styles.container}>
+            <Camera type={this.state.cameraType} style={styles.camera}   ref={(r) => {
+            camera = r}}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.photoButton} onPress={this.takePicture}>
+                  <Text style={styles.text}> Photo </Text>
+                </TouchableOpacity>
+              </View>
+            </Camera>
+          </SafeAreaView>
+      ));
     }
   }
 }

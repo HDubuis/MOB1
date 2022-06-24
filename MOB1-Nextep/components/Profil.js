@@ -38,6 +38,17 @@ class Profil extends Component {
       this.setState({data: {...this.state.data, description: newDescription}});
     }
 
+    updateProfile() {
+      const axiosConfig = {headers: { Authorization: "Bearer " + this.state.userToken}};
+      axios.get(config.apiurl + "profile",axiosConfig)
+      .then(response => {
+        this.setState({data: response.data});
+      })
+    .catch(error => {
+      console.log(error);
+    });
+    }
+
     onDeletePressed() {
       const axiosConfig = {headers: { Authorization: "Bearer " + this.state.userToken}};
       axios.delete(config.apiurl + "profile/photo",axiosConfig)
@@ -50,20 +61,7 @@ class Profil extends Component {
       );
     }
 
-    updateProfile() {
-      const axiosConfig = {headers: { Authorization: "Bearer " + this.state.userToken}};
-      axios.get(config.apiurl + "profile",axiosConfig)
-      .then(response => {
-        this.setState({data: response.data});
-      })
-    .catch(error => {
-      console.log(error);
-    });
-    }
-
-
-    updatePressed() {
-      console.log(this.state.userToken);
+    modifiyProfile() {
         const {email, description } = this.state.data;
         const _method = "PATCH";
         const payload = { email, description, _method };
@@ -92,7 +90,7 @@ class Profil extends Component {
                 </TouchableOpacity>
                 <TextInput placeholder="email" style={styles.input} onChangeText={this.onEmailChange}>{this.state.data.email}</TextInput>
                 <TextInput placeholder="Description" style={styles.input} onChangeText={this.onDescriptionChange}>{this.state.data.description}</TextInput>
-                <Button title="Modifier" onPress={this.updatePressed.bind(this)}/>
+                <Button title="Modifier" onPress={this.modifiyProfile.bind(this)}/>
               </SafeAreaView>
             </View>
         );
