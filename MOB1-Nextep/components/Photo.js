@@ -4,7 +4,8 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from "react-native";
 import { Camera } from "expo-camera";
 import * as SecureStore from "expo-secure-store";
@@ -40,8 +41,6 @@ class Photo extends Component {
     savePhoto = () => {
       const data = new FormData(),
             filename = this.state.capturedPicture.uri.split("/").pop()
-  
-      console.log(this.state.capturedPicture);
       let picture = {
         uri: this.state.capturedPicture.uri,
         type: "image/jpeg",
@@ -61,7 +60,6 @@ class Photo extends Component {
   
       axios.post(config.apiurl + "profile/photo", data, header)
       .then(() => {
-        console.log("Photo saved");
         this.props.navigation.reset({index:0 , routes: [{name: "Mon profil"}]});
         })
 
@@ -91,11 +89,12 @@ class Photo extends Component {
                 <TouchableOpacity style={styles.photoButton} onPress={this.takePicture}>
                   <Text style={styles.text}> Photo </Text>
                 </TouchableOpacity>
+                <Image style={styles.picture} source={{uri: this.state.capturedPicture.uri}}/>
                 <TouchableOpacity style={styles.photoButton} onPress={this.savePhoto}>
                   <Text style={styles.text}> Save </Text>
                 </TouchableOpacity>
               </View>
-            </Camera>
+              </Camera>
           </SafeAreaView>
           ) : (
             <SafeAreaView style={styles.container}>
@@ -120,8 +119,14 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     textAlign: "center",
   },
+  picture: {
+    height: 100,
+    width: 100,
+    flex: 0.3,
+    alignSelf: 'flex-end'
+  },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "white"
   },
@@ -139,6 +144,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     alignItems: 'center',
   },
+
 });
 
 export default Photo;
